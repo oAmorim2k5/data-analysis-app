@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Home - Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/home_style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos específicos do cliente, se necessário */
+        .sidebar-header {
+            margin-top: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--gray-100);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">🔶</div>
+            
+            <div class="sidebar-header">
+                <div class="client-logo" style="width: 50px; height: 50px; background-color: #10b981;">TL</div>
+                <span class="client-name">Tech Solutions Ltda.</span>
+            </div>
+
+            <nav class="menu">
+                <a href="#" class="menu-item">
+                    <i class="fas fa-chart-line"></i> 
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-photo-video"></i> 
+                    <span>Stock Media</span>
+                </a>
+            </nav>
+            
+            </aside>
+
+        <main class="main-content">
+            <p class="welcome-message">Olá Tech Solutions Ltda.,</p>
+            </main>
+    </div>
+</body>
+</html>
