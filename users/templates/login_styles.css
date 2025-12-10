@@ -1,0 +1,249 @@
+:root {
+  --orange-50: #fff7ed;
+  --orange-100: #ffedd5;
+  --orange-200: #fed7aa;
+  --orange-400: #fb923c;
+  --orange-500: #f97316;
+  --orange-600: #ea580c;
+  --orange-700: #c2410c;
+  --white: #ffffff;
+  --bg: #f9f7f5;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text);
+  background: linear-gradient(135deg, var(--bg) 0%, var(--orange-50) 100%);
+}
+
+/* Fundo decorativo com glow */
+.bg-decoration {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(600px 300px at 80% 10%, rgba(249, 115, 22, 0.25), transparent 60%),
+    radial-gradient(500px 250px at 10% 80%, rgba(251, 146, 60, 0.20), transparent 60%);
+  filter: blur(6px);
+}
+
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 32px;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.brand {
+  padding: 32px 24px;
+}
+
+.logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  background: linear-gradient(135deg, var(--orange-500), var(--orange-700));
+  color: var(--white);
+  box-shadow: 0 12px 30px rgba(234, 88, 12, 0.35);
+}
+
+.title {
+  margin: 16px 0 8px;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+/* Card do formulário com estilo sofisticado */
+.login-form {
+  background: color-mix(in srgb, var(--white) 85%, var(--orange-50) 15%);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: var(--shadow);
+  backdrop-filter: saturate(120%) blur(6px);
+}
+
+.field {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+.field input {
+  width: 100%;
+  padding: 18px 16px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  background: var(--white);
+  color: var(--text);
+  font-size: 16px;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 120ms ease;
+}
+
+.field input::placeholder {
+  color: transparent; /* usamos label como placeholder */
+}
+
+.field label {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 6px;
+  color: var(--muted);
+  background: var(--white);
+  pointer-events: none;
+  transition: all 160ms ease;
+}
+
+/* Efeito de label flutuante */
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label {
+  top: 0;
+  transform: translateY(-50%) scale(0.92);
+  color: var(--orange-600);
+}
+
+/* Anel de foco */
+.focus-ring {
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--orange-200) 65%, transparent);
+  transition: opacity 160ms ease;
+}
+
+.field input:focus ~ .focus-ring {
+  opacity: 1;
+}
+
+.field input:focus {
+  border-color: var(--orange-400);
+  box-shadow: 0 8px 24px rgba(251, 146, 60, 0.18);
+  transform: translateY(-1px);
+}
+
+/* Meta e ações */
+.form-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px 0 18px;
+}
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  user-select: none;
+}
+
+.checkbox input {
+  accent-color: var(--orange-500);
+}
+
+.link {
+  color: var(--orange-600);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Botão com gradiente */
+.btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: none;
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  color: var(--white);
+  background: linear-gradient(135deg, var(--orange-500), var(--orange-700));
+  box-shadow: 0 14px 32px rgba(234, 88, 12, 0.35);
+  transition: transform 120ms ease, box-shadow 160ms ease, filter 160ms ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 40px rgba(234, 88, 12, 0.40);
+  filter: saturate(110%);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 12px 28px rgba(234, 88, 12, 0.30);
+}
+
+/* Rodapé do formulário */
+.form-footer {
+  margin-top: 14px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.form-footer .link {
+  font-weight: 600;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 36px 20px;
+  }
+
+  .brand {
+    text-align: center;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+}
+
+/* Acessibilidade: foco visível via teclado */
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--orange-400) 65%, transparent);
+  outline-offset: 3px;
+}
