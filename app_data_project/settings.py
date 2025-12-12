@@ -66,12 +66,19 @@ WSGI_APPLICATION = 'app_data_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'appDB',
+        'NAME': BASE_DIR / 'db.sqlite3', # Cria um arquivo db.sqlite3 no seu projeto
+    },
+    'appDB': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'appDB',
         'USER': 'root',
-        'PASSWORD': '008976,',
+        'PASSWORD': '008976',
         'HOST': 'localhost',                       # IP ou nome do host (Use 'localhost' se estiver local)
-        'PORT': '3306',
-    }
+        'PORT': '3310',
+    },
+    'OPTIONS': {
+            'init_command': "SET time_zone = '+00:00'",
+        }
 }
 
 
@@ -97,13 +104,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_TZ = True
+TIME_ZONE = 'America/Sao_Paulo' 
+USE_TZ = False
+LANGUAGE_CODE = 'pt-br'
+DATE_FORMAT = 'd/m/Y' 
+DATETIME_FORMAT = 'd/m/Y H:i:s'
 
 
 # Static files (CSS, JavaScript, Images)
