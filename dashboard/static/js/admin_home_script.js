@@ -1,9 +1,3 @@
-/**
- * admin_home_script.js
- * Script completo para sidebar do Admin: gerencia clique (abertura/fechamento)
- * e saída do mouse (fechamento forçado de todos).
- */
-
 document.addEventListener('DOMContentLoaded', () => {
     
     // Seleciona elementos necessários

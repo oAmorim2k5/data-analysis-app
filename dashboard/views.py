@@ -5,3 +5,4 @@ def admin_home(request):
 
 def client_home(request):
     return render(request, 'client_home.html')
+

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Login</title>
+  <title>Account Request</title>
   <link rel="stylesheet" href="{% static 'css/login_style.css' %}" />
 </head>
 <body>
@@ -14,13 +14,20 @@
     <section class="brand">
       <div class="logo">🔶</div>
       <h1 class="title">Welcome</h1>
-      <p class="subtitle">Enter your credentials to continue!</p>
+      <p class="subtitle">Enter your credentials to request an user account!</p>
     </section>
 
-    <form class="login-form" action="/login" method="post" novalidate>
+    <form class="signup-form" action="/signup" method="post" novalidate>
+
       <div class="field">
         <input id="fullname" name="fullname" type="text" required autocomplete="fullname" />
         <label for="fullname">Full Name</label>
+        <span class="focus-ring"></span>
+      </div>
+
+      <div class="field">
+        <input id="email" name="email" type="email" required autocomplete="email" />
+        <label for="email">Email</label>
         <span class="focus-ring"></span>
       </div>
 
@@ -31,23 +38,14 @@
       </div>
 
       <div class="field">
-        <input id="clientId" name="client_id" type="text" required />
-        <label for="clientId">Client ID</label>
+        <input id="clientId" name="client_id" type="text" required  />
+        <label for="clientId">Company Name ( local )</label>
         <span class="focus-ring"></span>
       </div>
-
-      <div class="form-meta">
-        <label class="checkbox">
-          <input type="checkbox" name="remember" />
-          <span>Remember-me</span>
-        </label>
-        <a class="link" href="/forgot">Forgot you password?</a>
-      </div>
-
-      <button class="btn" type="submit">Enter</button>
+      <button class="btn" type="submit">Submit</button>
 
       <div class="form-footer">
-        <p>Don't have an account? <a class="link" href="{% url 'signup' %}">request here</a></p>
+        <p>Do you already have an account? <a class="link" href="{% url 'login' %}">log in here.</a></p>
       </div>
     </form>
   </main>
