@@ -1,49 +1,146 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br" class="h-full">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Home</title>
-    <link rel="stylesheet" href="{% static 'css/home_style.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    </head>
-<body>
-    <script src="{% static 'js/admin_home_script.js' %}"></script>
-    
-    <header class="header">
-        <div class="logo">🔶</div>
-        
-        <nav class="header-nav">
-            <a href="{% url 'admin_home' %}" class="active-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            
-            <a href="{% url 'clients_management' %}" id="clients-btn"><i class="fas fa-users"></i> Clients</a>
-            
-            <a href="#"><i class="fas fa-headset"></i> Support</a>
-        </nav>
-        
-        <div class="user-profile" title="Perfil do Usuário">
-            </div>
-    </header>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Admin Home{% endblock %}</title>
 
-    <div class="container">
-        
-        <main class="main-content">
-            <p class="welcome-message">Olá Victor, Bem-vindo ao Dashboard Admin</p>
+  <!-- Tailwind CSS via CDN (modo JIT) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0ea5e9', // sky-500
+          }
+        }
+      }
+    }
+  </script>
 
-            <section class="dashboard-area">
-                <h2>Visão Geral</h2>
-                <div class="stats-grid">
-                    <div class="card">Total de Clientes: </div>
-                    <div class="card">Solicitações Pendentes: </div>
-                </div>
+  <!-- Chart.js para gráficos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-                <div class="chart-container" style="height: 300px; background-color: #fff; border-radius: 8px; margin-top: 20px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                    <p style="color: var(--gray-800);">Área para Gráfico de Atividade Principal</p>
-                </div>
-            </section>
-            
-        </main>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/home_style.css' %}">
+</head>
+<body class="h-full bg-gray-50 text-gray-800">
+  <!-- Navbar topo -->
+  <header class="fixed top-0 left-0 right-0 z-30 bg-white border-b border-gray-200">
+    <div class="max-w-full px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button id="toggleSidebar" class="p-2 rounded-md hover:bg-gray-100">
+          <!-- Icone hambúrguer -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <span class="font-semibold text-lg">Kyndryl Analytics</span>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <div class="hidden sm:flex items-center bg-gray-100 rounded-md px-3 py-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zm-7 8a7 7 0 1112.452 4.391l4.328 4.329a1 1 0 01-1.415 1.414l-4.329-4.328A7 7 0 011 12z" clip-rule="evenodd" />
+          </svg>
+          <input class="bg-transparent outline-none text-sm" placeholder="Buscar..." />
+        </div>
+
+        <button class="relative p-2 rounded-md hover:bg-gray-100">
+          <!-- Notificações -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2a7 7 0 00-7 7v3.586l-1.707 1.707A1 1 0 004 16h16a1 1 0 00.707-1.707L19 12.586V9a7 7 0 00-7-7z" />
+            <path d="M8 18a4 4 0 008 0H8z" />
+          </svg>
+        </button>
+
+        <div class="flex items-center gap-2">
+          <img class="h-8 w-8 rounded-full" src="https://i.pravatar.cc/64" alt="User">
+          <span class="hidden sm:block text-sm">Victor</span>
+        </div>
+      </div>
     </div>
+  </header>
+
+  <!-- Layout com sidebar -->
+  <div class="pt-14 flex">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-64 shrink-0 bg-white border-r border-gray-200 h-[calc(100vh-3.5rem)] fixed sm:static left-0 top-14 z-20 translate-x-0 transition-transform">
+      <nav class="p-4">
+        <div class="text-xs font-semibold text-gray-500 uppercase mb-2">Navegação</div>
+        <ul class="space-y-1">
+          <li>
+            <a href=none class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+              </svg>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"/>
+              </svg>
+              <span>Relatórios</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 12a5 5 0 100-10 5 5 0 000 10zm-9 9a9 9 0 1118 0H3z"/>
+              </svg>
+              <span>Usuários</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="mt-6 text-xs font-semibold text-gray-500 uppercase mb-2">Filtros</div>
+        <div class="space-y-3">
+          <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
+            <option>Últimos 7 dias</option>
+            <option>Últimos 30 dias</option>
+            <option>Este mês</option>
+            <option>Este ano</option>
+          </select>
+          <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
+            <option>Categoria: Todas</option>
+            <option>Financeiro</option>
+            <option>Operações</option>
+            <option>Marketing</option>
+          </select>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Conteúdo -->
+    <main class="flex-1 ml-0 sm:ml-64 p-4 sm:p-6">
+      {% block content %}
+      {% endblock %}
+    </main>
+  </div>
+
+  <script>
+    // Toggle sidebar em telas menores
+    const btn = document.getElementById('toggleSidebar');
+    const sidebar = document.getElementById('sidebar');
+    btn.addEventListener('click', () => {
+      const isHidden = sidebar.classList.contains('-translate-x-full');
+      if (isHidden) {
+        sidebar.classList.remove('-translate-x-full');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+      }
+    });
+    // Inicialmente escondida em mobile
+    const init = () => {
+      if (window.innerWidth < 640) {
+        sidebar.classList.add('-translate-x-full');
+      }
+    };
+    window.addEventListener('load', init);
+    window.addEventListener('resize', init);
+  </script>
 </body>
 </html>
