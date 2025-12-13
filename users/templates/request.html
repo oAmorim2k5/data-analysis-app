@@ -1,11 +1,55 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Account Request</title>
   <link rel="stylesheet" href="{% static 'css/login_style.css' %}" />
+  <style>
+    .message-popup {
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      font-weight: bold;
+      text-align: center;
+      display: none; 
+    }
+    .message-popup.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .message-popup.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .info-popup {
+      position: absolute;
+      right: calc(100% + 10px); 
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 10px;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+      width: 200px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none; 
+    }
+    .field {
+      position: relative;
+    }
+    .field:hover .info-popup, .field input:focus + label + .focus-ring + .info-popup {
+        opacity: 1; 
+        pointer-events: auto;
+    }
+  </style>
 </head>
 <body>
   <div class="bg-decoration"></div>
@@ -18,35 +62,61 @@
     </section>
 
     <form class="request-form" action="{% url 'request' %}" method="POST">{% csrf_token %}
+      
+      {% if error %}
+        <div id="status-popup" class="message-popup error" style="display: block;">
+          {{ error }}
+        </div>
+      {% endif %}
 
+      {% if success %}
+        <div id="status-popup" class="message-popup success" style="display: block;">
+          {{ success }}
+        </div>
+      {% endif %}
       <div class="field">
-        <input id="fullname" name="req_fullname" type="text" required autocomplete="fullname" />
+        <input id="fullname" name="req_fullname" type="text" required autocomplete="fullname" value="{{ FULLNAME|default_if_none:'' }}" />
         <label for="fullname">Full Name</label>
         <span class="focus-ring"></span>
       </div>
 
       <div class="field">
-        <input id="email" name="req_email" type="email" required autocomplete="email" />
+        <input id="email" name="req_email" type="email" required autocomplete="email" value="{{ EMAIL|default_if_none:'' }}" />
         <label for="email">Email</label>
         <span class="focus-ring"></span>
       </div>
 
       <div class="field">
-        <input id="password" name="req_password" type="password" required autocomplete="current-password" />
+        <input id="password" name="req_password" type="password" required autocomplete="new-password" />
         <label for="password">Password</label>
         <span class="focus-ring"></span>
+        <div class="info-popup" id="password-rules-popup">
+          Password Rules:
+          <ul>
+            <li>Min. 8 characters</li>
+            <li>1 Uppercase (A-Z)</li>
+            <li>1 Lowercase (a-z)</li>
+            <li>1 Number (0-9)</li>
+            <li>1 Special Character (@$!%*?&)</li>
+          </ul>
+        </div>
       </div>
-
       <div class="field">
-        <input id="rep_password" name="rep_password" type="password" required autocomplete="current-password" />
-        <label for="password">Repeat Password</label>
+        <input id="rep_password" name="rep_password" type="password" required autocomplete="new-password" />
+        <label for="rep_password">Repeat Password</label>
         <span class="focus-ring"></span>
       </div>
 
       <div class="field">
-        <input id="clientName" name="req_client_name" type="text" required  />
+        <input id="clientName" name="req_client_name" type="text" required value="{{ COMPANY_NAME|default_if_none:'' }}" />
         <label for="clientName">Company Name ( local )</label>
         <span class="focus-ring"></span>
+        <div class="info-popup" id="company-example-popup">
+          Example:
+          <p>Kyndryl (Hortolandia)</p>
+          <p>IBM (Sao Paulo)</p>
+          <p>No Punctuation marks </p>
+        </div>
       </div>
       <button class="btn" type="submit">Submit</button>
 
@@ -55,5 +125,16 @@
       </div>
     </form>
   </main>
+  
+  <script>
+    // Redirection after Success
+    const successPopup = document.querySelector('.message-popup.success');
+    if (successPopup) {
+      setTimeout(() => {
+        // Redirects to the login page after 10 seconds
+        window.location.href = "{% url 'login' %}"; 
+      }, 8000);
+    }
+  </script>
 </body>
 </html>

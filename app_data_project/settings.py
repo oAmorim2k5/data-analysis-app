@@ -66,19 +66,21 @@ WSGI_APPLICATION = 'app_data_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3', # Cria um arquivo db.sqlite3 no seu projeto
+        'NAME': BASE_DIR / 'db.sqlite3',
     },
-    'appDB': {
+    'appdb': { # O nome da conexão que você usa no .using('appDB')
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'appDB',
+        'NAME': 'appdb',
         'USER': 'root',
         'PASSWORD': '008976',
-        'HOST': 'localhost',                       # IP ou nome do host (Use 'localhost' se estiver local)
+        'HOST': 'localhost',
         'PORT': '3310',
-    },
-    'OPTIONS': {
+        # AGORA CORRETO: OPTIONS está dentro de 'appDB'
+        'OPTIONS': {
             'init_command': "SET time_zone = '+00:00'",
         }
+    },
+    # NADA MAIS AQUI!
 }
 
 

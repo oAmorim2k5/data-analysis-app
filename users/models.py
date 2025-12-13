@@ -12,8 +12,6 @@ class AccountRequest(models.Model):
     STATUS = models.CharField(max_length=10)
 
     class Meta:
-        # 1. Nome da Tabela no Workbench:
-        db_table = 'AccountRequest' 
-        # 2. Conexão: Indica qual banco de dados usar do settings.py
-        app_label = 'users' # Substitua pelo nome do seu app
-        managed = False     # CRUCIAL: Diz ao Django para NÃO tentar criar/modificar esta tabela
+        db_table = 'accountrequest' 
+        app_label = 'users' 
+        managed = False  
